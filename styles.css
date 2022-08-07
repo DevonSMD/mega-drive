@@ -1,0 +1,39 @@
+body {
+  text-align: center;
+}
+
+div.code {
+  display: inline-block;
+  border-style: solid;
+  border-width: 1;
+  border-color: white;
+  background-color: #1E1E1E;
+  color: white;
+  padding: 4;
+  font-family: "Courier New", monospace;
+  text-align: left;
+}
+
+div.code span.opcode {
+  color: #569CD6;
+}
+
+div.code span.num {
+  color: #B5CEA8;
+}
+
+div.code span.reg {
+  color: #D7BA7D;
+}
+
+div.code span.comment {
+  color: #6A9955;
+}
+
+div.code span.label {
+  color: white;
+}
+
+div.code span.paren {
+  color: #FFC813;
+}

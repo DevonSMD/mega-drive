@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <title>Devon's Mega Drive Stuff</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <p>WIP</p>
+  <div class="code">
+  <span class="label">loadInitialProgram:</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">movea.l</span>&nbsp;<span class="label">ipDstAddress</span><span class="paren">(</span><span class="reg">a5</span><span class="paren">)</span>,<span class="reg">a0</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">bsr.w</span>&nbsp;&nbsp;&nbsp;<span class="label">copySector0</span><br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">move.l</span>&nbsp;&nbsp;<span class="reg">a0</span>,<span class="label">dataBufferAddress</span><span class="paren">(</span><span class="reg">a5</span><span class="paren">)</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">movea.l</span>&nbsp;<span class="label">bootHeaderAddress</span><span class="paren">(</span><span class="reg">a5</span><span class="paren">)</span>,<span class="reg">a0</span><br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">movea.l</span>&nbsp;<span class="label">SYSTEMHEADER.ipAddress</span><span class="paren">(</span><span class="reg">a0</span><span class="paren">)</span>,<span class="reg">a1</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">cmpa.l</span>&nbsp;&nbsp;#<span class="num">$200</span>,<span class="reg">a1</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">bne.s</span>&nbsp;&nbsp;&nbsp;<span class="label">loc_3C80</span><br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">cmpi.l</span>&nbsp;&nbsp;#<span class="num">$600</span>,<span class="label">SYSTEMHEADER.ipSize</span><span class="paren">(</span><span class="reg">a0</span><span class="paren">)</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">bne.s</span>&nbsp;&nbsp;&nbsp;<span class="label">loc_3C80</span><br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">bra.w</span>&nbsp;&nbsp;&nbsp;<span class="label">loc_3C88</span><br>
+  <span class="comment">; -----------------------------------------------------------</span><br>
+  <br>
+  <span class="label">loc_3C80:</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">; Read IP from disc</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">; d1 is most likely $FFFF if we get here, so we read</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">; 32 sectors (64 KiB)</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">bsr.w</span>&nbsp;&nbsp;&nbsp;<span class="label">readSectorsFromDisc</span><br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">; Jump back if error</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="opcode">bcs.w</span>&nbsp;&nbsp;&nbsp;<span class="label">loc_3A84</span></div>
+</body>
+
+</html>
